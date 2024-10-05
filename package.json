@@ -1,0 +1,60 @@
+{
+  "name": "zzz",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@elysiajs/cors": "^1.1.0",
+    "@elysiajs/jwt": "^1.1.0",
+    "@elysiajs/static": "^1.1.0",
+    "@elysiajs/swagger": "^1.1.1",
+    "@tabler/icons-react": "^3.19.0",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^8.2.2",
+    "elysia": "^1.1.7",
+    "postcss": "^8.4.41",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-reader": "^2.0.11",
+    "react-router-dom": "^6.26.1",
+    "react-scripts": "^5.0.1",
+    "react-toastify": "^10.0.5",
+    "tailwindcss": "^3.4.10",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "concurrently \"bun run react-scripts start\" \"bun run --hot ./server/serve.js\" ",
+    "server": "bun run --hot ./server/serve.js",
+    "build": "bun react-scripts build",
+    "test": "bun react-scripts test",
+    "eject": "bun react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
