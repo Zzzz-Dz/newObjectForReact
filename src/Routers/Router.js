@@ -26,10 +26,9 @@ function check_token(){
 
 async function from_action({data,router}){
   const user = data.username; const password = data.password;
-  const response = parse_token({url:`user/${router}`,username:`${user}`,password:`${password}`}).catch((error)=>{console.error(error)})
-  const status = await response.then((res)=> res.status)
-  const text = await response.then((res)=> res.text())
-  return {status:status,text:text}  
+  const response = parse_token({url:`user/${router}`,username:`${user}`,password:`${password}`}).catch((error)=>{throw new Error(error)})
+  const Json_data = await response.then((res)=> res.json())
+  return Json_data
 }
 
 const router = createBrowserRouter(
