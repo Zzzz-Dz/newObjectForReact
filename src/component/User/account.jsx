@@ -51,12 +51,13 @@ export default function Account(){
     const stateDispatch = useContext(UserDispatchContext)
     useEffect(()=>{
         if(actionData){
+            console.log(actionData)
             const { code ,msg ,data} = actionData;
-            if (code === 502 || code === 501){
+            if (code === "502" || code === "501"){
                 console.log(msg)
                 toast.error(data)
             }
-            if (code === 201){
+            if (code === "201"){
                 toast.success('登录成功')
                 setTimeout(()=>{
                     localStorage.setItem('token',data);

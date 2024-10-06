@@ -27,7 +27,7 @@ function check_token(){
 async function from_action({data,router}){
   const user = data.username; const password = data.password;
   const response = parse_token({url:`user/${router}`,username:`${user}`,password:`${password}`}).catch((error)=>{throw new Error(error)})
-  const Json_data = await response.then((res)=> res.json())
+  const Json_data = await response.json()
   return Json_data
 }
 
@@ -40,11 +40,12 @@ const router = createBrowserRouter(
           <Route path='readepub/:id' element={<Readepub />} loader={async({params}) => { 
               const token = localStorage.getItem('token');
               const response = await fetch(`http://${IP}:${port}/user/hasToken/${token}`,{method:"POST"}).catch((error)=>{ throw new Response(error,{status:302,headers:{Location:'/?state=404'}}) });
-              if(response.status === 502){
+              const { code, msg, data } = await response.json()
+              if(code === "502"){
                 if (token){
                   localStorage.removeItem('token')
                 };
-                throw new Response(null,{status:302,headers:{Location:'/novel/?state=nologin'}})
+                throw new Response(null,{status:302,headers:{Location:`/novel/?state=${encodeURI(msg)}&msg=${encodeURI(data)}`}})
               }
               return params.id
               }} />

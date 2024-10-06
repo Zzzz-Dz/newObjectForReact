@@ -62,9 +62,9 @@ new Elysia()
             // 获取token,解析
             const profile = await zzz.verify(token)
             if (!profile) {
-                return { code: "502" , msg:"token错误", data: "用户登录失败" }
+                return { code: "502" , msg:"tokenError", data: "未经授权" }
             }
-            return { code: "201" , msg:"userLogin", data: "已登录" }
+            return { code: "201" , msg:"login", data: "已登录" }
         },{
             params:t.Object({
                 token:t.String()
