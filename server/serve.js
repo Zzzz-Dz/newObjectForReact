@@ -15,17 +15,11 @@ new Elysia()
     .use(cors({origin:"localhost:5005",methods:['GET','POST'],allowedHeaders:['Content-Type','Authorization'],credentials:true}))
     .use(staticPlugin({assets:'public/static',prefix:'/static',charset:'UTF-8'}))
     .get('/', () => 'Hello Elysia')
-    .guard({
-        Response: t.Partial(t.Object({
-            code:t.String(),
-            msg:t.String(),
-            data:t.String()
-        }))
-    })
     .get('/File/*',({params}) => {
         const worksPath = decodeURIComponent(params['*'])
         const filePath = path.join('./public',worksPath)
-        return Bun.file(filePath)})
+        return Bun.file(filePath)
+    })
     .get('/getWorks',async () => {
         const ArrayWorks = [['pictrueName'],['pictrueURL'],['worksName','upName','uploadDate']]
         const worksPath = path.join(__dirname,'../public/static/worksFile')
@@ -52,12 +46,25 @@ new Elysia()
         })
         return { worksData:result }
     },{
-        Response:t.Object({
-            worksData:t.Array()
+        response:t.Object({
+            worksData:t.Array(t.Object({
+                pictrueName:t.String(),
+                pictrueURL:t.String(),
+                worksName:t.String(),
+                upName:t.String(),
+                uploadDate:t.String()
+            }))
         })
     })
     .group('/user',(app) => 
         app
+        .guard({
+            response: t.Object({
+                code:t.String(),
+                msg:t.String(),
+                data:t.String()
+            })
+        })
         .post('/hasToken/:token',async ({zzz,params:{token}})=>{
             // 获取token,解析
             const profile = await zzz.verify(token)
@@ -110,5 +117,6 @@ new Elysia()
         if (code === 'VALIDATION'){
             return error.message
         }
+        return error
     })
     .listen(server)
