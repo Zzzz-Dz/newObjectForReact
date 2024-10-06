@@ -19,17 +19,18 @@ function RouterComponent(){
 function App() {
   let location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams(location.search);
-  const status = searchParams.get('state');
-  const stateDispatch = useContext(UserDispatchContext);
+  const stateDispatch = useContext(UserDispatchContext); 
   const toastId = useRef(null);
   useEffect(()=>{
+    const status = decodeURI(searchParams.get('state'))
+    const msg = decodeURI(searchParams.get('msg'))
     if(!toast.isActive(toastId.current)){
       switch (status){
         case 'login':
-          toastId.current = toast.success('已登录')
+          toastId.current = toast.success(msg)
           break;
-        case 'nologin':
-          toastId.current = toast.warning('未经授权')
+        case 'tokenError':
+          toastId.current = toast.warning(msg)
           break;
         case '404':
           toastId.current = toast.error('服务器未响应')
@@ -41,7 +42,7 @@ function App() {
     return ()=>{
       setSearchParams('')
     }
-  },[status,setSearchParams])
+  },[searchParams,setSearchParams])
   useEffect(()=>{
     const token = localStorage.getItem('token')
     if (token){

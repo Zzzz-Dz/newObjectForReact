@@ -15,12 +15,18 @@ new Elysia()
     .use(cors({origin:"localhost:5005",methods:['GET','POST'],allowedHeaders:['Content-Type','Authorization'],credentials:true}))
     .use(staticPlugin({assets:'public/static',prefix:'/static',charset:'UTF-8'}))
     .get('/', () => 'Hello Elysia')
-    .get('/e',()=>{return decodeURIComponent('http%3A%2F%2F127.0.0.1%2Fstatic%2FworksFile%2Fkawaikomari%40static%26worksFile%40%E5%B0%8F%E9%9E%A0%40zzz%409-26.jpg')})
-    .get('/File/*',({request,params}) => {
+    .guard({
+        Response: t.Partial(t.Object({
+            code:t.String(),
+            msg:t.String(),
+            data:t.String()
+        }))
+    })
+    .get('/File/*',({params}) => {
         const worksPath = decodeURIComponent(params['*'])
         const filePath = path.join('./public',worksPath)
         return Bun.file(filePath)})
-    .get('/getWorks',async ({set}) => {
+    .get('/getWorks',async () => {
         const ArrayWorks = [['pictrueName'],['pictrueURL'],['worksName','upName','uploadDate']]
         const worksPath = path.join(__dirname,'../public/static/worksFile')
         const files = await readdir(worksPath,{encoding:'utf-8'});
@@ -44,7 +50,6 @@ new Elysia()
             })
             return array2
         })
-        set.status = 200;
         return { worksData:result }
     },{
         Response:t.Object({
@@ -53,34 +58,30 @@ new Elysia()
     })
     .group('/user',(app) => 
         app
-        .post('/hasToken/:token',async ({zzz,set,params:{token}})=>{
+        .post('/hasToken/:token',async ({zzz,params:{token}})=>{
             // 获取token,解析
             const profile = await zzz.verify(token)
             if (!profile) {
-                set.status = 502
-                return '用户登录失败'
+                return { code: "502" , msg:"tokenError", data: "未经授权" }
             }
-            set.status = 201
-            return '已登录'
+            return { code: "201" , msg:"login", data: "已登录" }
         },{
             params:t.Object({
                 token:t.String()
             })
         }
     )
-        .post('/login/:user/:password',async ({zzz,set,params:{user,password}})=> {
+        .post('/login/:user/:password',async ({zzz,params:{user,password}})=> {
             // 登录账户，验证密码,返回token
             const userdata = db.query('select password from user where username=$user').get({$user:user.toString()})
             if (!userdata) {
-                set.status = 502
-                return '用户不存在'
+                return {code:"502" , msg: "数据库中未找到该用户" , data: "用户不存在" }
             }
             if (userdata.password === password) {
-                set.status = 201
-                return await zzz.sign(userdata)
+                const tokenData = await zzz.sign(userdata)
+                return { code:"201" , msg: "用户登录成功", data: tokenData}
             }
-            set.status = 501
-            return '用户密码错误'
+            return { code: "501" , msg: "用户密码错误" , data: "用户密码错误" }
         },{
             params:t.Object({
                 user:t.String(),
@@ -88,15 +89,14 @@ new Elysia()
             })
         }
         )
-        .post('/enroll/:user/:password',async ({params:{user,password},set,zzz})=>{
+        .post('/enroll/:user/:password',async ({params:{user,password},zzz})=>{
             // 注册账户,返回token
             if (db.query('select username from user where username=?1').get(user.toString())) {
-                set.status = 502
-                return '用户已存在'
+                return { code: "502" , msg: "数据库中已有该用户" , data: "用户已存在" }
             }
             db.query('insert into user (username,password) values($user,$pass)').run({$user:user.toString(),$pass:password.toString()})
-            set.status = 201
-            return await zzz.sign(password)
+            const tokenData = await zzz.sign(password)
+            return { code: "201" , msg: "用户注册成功", data: tokenData }
         },
         {
             params:t.Object({

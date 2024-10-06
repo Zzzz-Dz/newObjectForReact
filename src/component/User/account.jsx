@@ -51,18 +51,16 @@ export default function Account(){
     const stateDispatch = useContext(UserDispatchContext)
     useEffect(()=>{
         if(actionData){
-            const state = {
-                status:actionData.status,
-                text:actionData.text
+            console.log(actionData)
+            const { code ,msg ,data} = actionData;
+            if (code === "502" || code === "501"){
+                console.log(msg)
+                toast.error(data)
             }
-            if (state.status === 502 || state.status === 501){
-                console.log(state.text)
-                toast.error(`${state.text}`)
-            }
-            if (state.status === 201){
+            if (code === "201"){
                 toast.success('登录成功')
                 setTimeout(()=>{
-                    localStorage.setItem('token',state.text);
+                    localStorage.setItem('token',data);
                     stateDispatch({type:'islogined'})
                     navigate('/',{Option:{replace:true}})
                 },2000)
