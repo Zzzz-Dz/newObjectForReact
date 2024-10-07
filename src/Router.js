@@ -1,15 +1,7 @@
 import { createBrowserRouter,createRoutesFromElements,Route} from 'react-router-dom';
-import App from '../App.jsx';
-import ErrorPage from './error-page.jsx';
-import UserLyaout from '../component/User/UserLyaout.jsx'
-import Account from '../component/User/account.jsx'
-import Readepub from '../component/epubRead.jsx';
-import HomePage from '../component/HomePage.jsx';
-import IP,{ port } from '../data/localIp.js'
-import Novel from '../component/readNovel.jsx'
-import Article from '../component/article.jsx'
-import AiApp from '../component/AiChat/AiApp.jsx'
-import AiHomePage from '../component/AiChat/HomePage.jsx'
+import App from './App.jsx';
+import IP,{ port } from './data/localIp.js'
+import { Novel, HomePage, Readepub, Article, Account, UserLyaout, AiApp, AiHomePage, ErrorPage } from './component/routers.js'
 
 function parse_token({url,username,password}){
   return new Promise((reslove,reject)=>{
