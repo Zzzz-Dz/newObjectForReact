@@ -1,7 +1,7 @@
 import { createBrowserRouter,createRoutesFromElements,Route} from 'react-router-dom';
 import App from './App.jsx';
 import IP,{ port } from './data/localIp.js'
-import { Novel, HomePage, Readepub, Article, Account, UserLyaout, AiApp, AiHomePage, ErrorPage } from './component/routers.js'
+import { Novel, HomePage, Readepub, Article, Account, UserLyaout, AiRoot, AiHomePage, ErrorPage } from './routers.js'
 
 function parse_token({url,username,password}){
   return new Promise((reslove,reject)=>{
@@ -57,7 +57,7 @@ const router = createBrowserRouter(
           }
           }}></Route>
       </Route>
-      <Route id="AiChat" path='/ai' element={<AiApp />}>
+      <Route id="AiChat" path='/ai' element={<AiRoot />}>
           <Route index element={<AiHomePage />}></Route>
       </Route>
     </>
