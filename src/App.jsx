@@ -86,7 +86,7 @@ function App() {
         </div>
       </nav>
       {/* 主体 */}
-      <div className='body grid mt-[3.5rem]'>
+      <div className='body grid mt-[3.5rem] @container'>
         <Outlet />
       </div>
     </div>

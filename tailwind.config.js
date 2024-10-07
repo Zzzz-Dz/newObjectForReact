@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  corePlugins: {
+    aspectRatio: false,
+  },
   theme: {
     extend: {},
     screens:{
@@ -14,6 +17,13 @@ export default {
       "2xl":"1536px"
     }
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms')({
+      strategy: 'base', // only generate global styles
+      strategy: 'class', // only generate classes
+    }),
+    require('@tailwindcss/container-queries'),
+    require('@tailwindcss/aspect-ratio'),
+  ],
 }
 
