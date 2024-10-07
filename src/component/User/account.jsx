@@ -8,8 +8,8 @@ function LoginForm({set}){
     return (
         <Form name="login" className="flex flex-col items-center gap-4 h-full justify-center relative z-20" method="post">
             <input type="hidden" name="formType" value="form1" />
-            <label className="tracking-widest"><span className="px-2">账户</span><input type="text" name="username" className="indent-2"></input></label>
-            <label className="tracking-widest"><span className="px-2">密码</span><input type="text" name="password" className="indent-2"></input></label>
+            <label className="tracking-widest"><span className="px-2">账户</span><input type="text" class="form-input rounded-md py-1" name="username"></input></label>
+            <label className="tracking-widest"><span className="px-2">密码</span><input type="text" class='form-input rounded-md py-1' name="password"></input></label>
             <div className="flex gap-4">
                 <button type="submit">提交</button>
                 <button onClick={(e)=>{e.preventDefault();set()}}>注册</button>
@@ -22,8 +22,8 @@ function EnrollForm({set}){
     return (
         <Form name="enroll" className="flex flex-col items-center gap-4 h-full justify-center relative z-20" method="post">
             <input type="hidden" name="formType" value="form2" />
-            <label className="tracking-widest"><span className="px-2">账户</span><input type="text" name="username" className="indent-2"></input></label>
-            <label className="tracking-widest"><span className="px-2">密码</span><input type="text" name="password" className="indent-2"></input></label>
+            <label className="tracking-widest"><span className="px-2">账户</span><input type="text" class='form-input rounded-md py-1' name="username"></input></label>
+            <label className="tracking-widest"><span className="px-2">密码</span><input type="text" class='form-input rounded-md py-1' name="password"></input></label>
             <div className="flex gap-4">
                 <button type="submit">提交</button>
                 <button onClick={(e)=>{e.preventDefault();set()}}>返回</button>

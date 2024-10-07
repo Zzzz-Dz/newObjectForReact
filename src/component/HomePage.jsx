@@ -31,7 +31,7 @@ function PictrueMap(){
                (data.id >= 7 && data.id <= 9 && ' mt-[2.5rem] ') ||
                (data.id > 9 && (data.id < 13 ? ' mt-[1.5rem] xl1:mt-[2.5rem] ' : data.id === 13 ? ' mt-[1.5rem] ' : ' xl1:mt-[1.5rem]'));
          return (
-            <div key={data.id} className={ gridStyle.span + gridMargin + ''} >
+            <div key={data.id} className={ gridStyle.span + gridMargin + ' '} >
                <img src={`http://${ip}:${port}/File/${FullURL}`} alt={`${data.pictrueName}`} className={ gridStyle.imgStyle + " w-full rounded-lg "}
                      style={{
                         backgroundSize: '100% 100%', // 强制背景图片填充整个元素
