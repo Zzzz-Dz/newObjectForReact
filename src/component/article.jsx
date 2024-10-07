@@ -1,5 +1,3 @@
-
-
 function Article(){
   return (
     <div className='grid grid-flow-row grid-cols-2 bg-blue-100'>
