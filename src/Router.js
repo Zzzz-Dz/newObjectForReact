@@ -37,18 +37,17 @@ function check_token() {
 async function from_action({ data, router }) {
   const user = data.username
   const password = data.password
-  try{
+  try {
     const response = parse_token({
       url: `user/${router}`,
       username: `${user}`,
       password: `${password}`
     })
-  const Json_data = await response.then((res)=>res.json())
-  return Json_data
-  }
-  catch (e){
+    const Json_data = await response.then(res => res.json())
+    return Json_data
+  } catch (e) {
     console.log(e)
-    return { code:"500" }
+    return { code: '500' }
   }
 }
 
@@ -69,7 +68,7 @@ const router = createBrowserRouter(
               ).catch(error => {
                 throw new Response(error, {
                   status: 302,
-                  headers: { Location: '/?state=404' }
+                  headers: { Location: '/novel/?state=404' }
                 })
               })
               const { code, msg, data } = await response.json()
