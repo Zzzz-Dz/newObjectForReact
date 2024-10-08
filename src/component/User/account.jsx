@@ -8,8 +8,8 @@ function LoginForm({set}){
     return (
         <Form name="login" className="flex flex-col items-center gap-4 h-full justify-center relative z-20" method="post">
             <input type="hidden" name="formType" value="form1" />
-            <label className="tracking-widest"><span className="px-2">账户</span><input type="text" class="form-input rounded-md py-1" name="username"></input></label>
-            <label className="tracking-widest"><span className="px-2">密码</span><input type="text" class='form-input rounded-md py-1' name="password"></input></label>
+            <label className="tracking-widest"><span className="px-2">账户</span><input type="text" className="form-input rounded-md py-1" name="username"></input></label>
+            <label className="tracking-widest"><span className="px-2">密码</span><input type="text" className='form-input rounded-md py-1' name="password"></input></label>
             <div className="flex gap-4">
                 <button type="submit">提交</button>
                 <button onClick={(e)=>{e.preventDefault();set()}}>注册</button>
@@ -22,8 +22,8 @@ function EnrollForm({set}){
     return (
         <Form name="enroll" className="flex flex-col items-center gap-4 h-full justify-center relative z-20" method="post">
             <input type="hidden" name="formType" value="form2" />
-            <label className="tracking-widest"><span className="px-2">账户</span><input type="text" class='form-input rounded-md py-1' name="username"></input></label>
-            <label className="tracking-widest"><span className="px-2">密码</span><input type="text" class='form-input rounded-md py-1' name="password"></input></label>
+            <label className="tracking-widest"><span className="px-2">账户</span><input type="text" className='form-input rounded-md py-1' name="username"></input></label>
+            <label className="tracking-widest"><span className="px-2">密码</span><input type="text" className='form-input rounded-md py-1' name="password"></input></label>
             <div className="flex gap-4">
                 <button type="submit">提交</button>
                 <button onClick={(e)=>{e.preventDefault();set()}}>返回</button>
@@ -52,7 +52,10 @@ export default function Account(){
     useEffect(()=>{
         if(actionData){
             console.log(actionData)
-            const { code ,msg ,data} = actionData;
+            const { code ,msg=null ,data=null } = actionData;
+            if (code === "500"){
+                toast.error('服务器未响应')
+            }
             if (code === "502" || code === "501"){
                 console.log(msg)
                 toast.error(data)
