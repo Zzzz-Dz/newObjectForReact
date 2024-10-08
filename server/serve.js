@@ -12,7 +12,7 @@ console.log(`Bun server run on ${process.env.localIp}:${server}`)
 new Elysia()
     .use(jwt({name:'zzz',secret: process.env.JWT_SECRETS ,alg: process.env.JWT_ALG ,exp:'7d'}))
     .use(import('@elysiajs/swagger').then((Module)=> Module.swagger()))
-    .use(cors({origin:"localhost:5005",methods:['GET','POST'],allowedHeaders:['Content-Type','Authorization'],credentials:true}))
+    .use(cors({origin:["localhost:5005","127.0.0.1:3000"],methods:['GET','POST'],allowedHeaders:['Content-Type','Authorization'],credentials:true}))
     .use(staticPlugin({assets:'public/static',prefix:'/static',charset:'UTF-8'}))
     .get('/', () => 'Hello Elysia')
     .get('/File/*',({params}) => {

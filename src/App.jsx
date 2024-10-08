@@ -28,6 +28,10 @@ function App() {
       switch (status){
         case 'login':
           toastId.current = toast.success(msg)
+
+          break;
+        case 'islogined':
+          toastId.current = toast.success('已登录')
           break;
         case 'tokenError':
           toastId.current = toast.warning(msg)

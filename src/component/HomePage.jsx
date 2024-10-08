@@ -7,7 +7,7 @@ function PictrueMap(){
    useEffect(() => {
       let ignore = false;
       async function startFetching() {
-         const json = await fetch('http://127.0.0.1:5006/getWorks').then((res)=>res.json()).then((v)=>{const {worksData} = v; return worksData.map((data,index)=>{return {...data,id:index+1}})}).catch((e)=>{console.error(e)});
+         const json = await fetch('http://127.0.0.1:5006/getWorks').then((res)=>res.json()).then((v)=>{const {worksData} = v; return worksData.map((data,index)=>{return {...data,id:index+1}})}).catch((e)=>{throw new Error(e)});
          if (!ignore) {
             setPictrueDatas(json);
          }

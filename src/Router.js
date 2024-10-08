@@ -37,15 +37,19 @@ function check_token() {
 async function from_action({ data, router }) {
   const user = data.username
   const password = data.password
-  const response = parse_token({
-    url: `user/${router}`,
-    username: `${user}`,
-    password: `${password}`
-  }).catch(error => {
-    throw new Error(error)
-  })
-  const Json_data = await response.json()
+  try{
+    const response = parse_token({
+      url: `user/${router}`,
+      username: `${user}`,
+      password: `${password}`
+    })
+  const Json_data = await response.then((res)=>res.json())
   return Json_data
+  }
+  catch (e){
+    console.log(e)
+    return { code:"500" }
+  }
 }
 
 const router = createBrowserRouter(
@@ -97,7 +101,7 @@ const router = createBrowserRouter(
           if (state) {
             throw new Response(null, {
               status: 302,
-              headers: { Location: `/?state=login` }
+              headers: { Location: `/?state=islogined` }
             })
           }
           return null
