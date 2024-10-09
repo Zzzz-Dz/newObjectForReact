@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { IconBallBowling,IconReload } from '@tabler/icons-react'
 
 function PictrueMap(){
-   const [pictrueDatas, setPictrueDatas] = useState(new Array(17))
+   const [pictrueDatas, setPictrueDatas] = useState(new Array(17).fill({}))
    useEffect(() => {
       let ignore = false;
       async function startFetching() {
@@ -13,7 +13,7 @@ function PictrueMap(){
                setPictrueDatas(json);
             }
          }catch (e){
-            return null
+           console.log(e)
          }  
       }
       startFetching();
@@ -41,6 +41,7 @@ function PictrueMap(){
             const worksURL = data.pictrueURL.replace('&','/');
             const worksInformation = Object.values(data).slice(0,2).join('@') + '@' + Object.values(data).slice(2,-1).join('_')
             const FullURL = encodeURIComponent(worksURL + '/' + worksInformation);
+            return(
             <div key={data.id} className={ gridStyle.span + gridMargin + ' '} >
                <img src={`http://${ip}:${port}/File/${FullURL}`} alt={`${data.pictrueName}`} className={ gridStyle.imgStyle + " w-full rounded-lg "}
                      style={{
@@ -59,7 +60,11 @@ function PictrueMap(){
                </div>
                {/* <div className='  w-full h-full absolute bg-gradient-to-t from-black from-0% to-100% '>1</div> */}
             </div>
-            )})}
+)
+         })}
+         
+         
+            
       </div>
       )
 }
