@@ -1,0 +1,8 @@
+/* Tailwind 基本样式及插件 */
+@tailwind base;
+/* Tailwind 的组件类和任何组件类 */
+@tailwind components;
+/* 这将注入 Tailwind 的实用程序类和任何已注册的实用程序类 */
+@tailwind utilities;
+/* Tailwind 注入悬停、焦点、响应式、暗模式和每个类别的其他变体 */
+@tailwind variants;  
