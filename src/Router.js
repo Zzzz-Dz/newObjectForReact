@@ -3,8 +3,8 @@ import {
   createRoutesFromElements,
   Route
 } from 'react-router-dom'
-import App from './App.jsx'
-import IP, { port } from './data/localIp.js'
+import App from './App.tsx'
+import IP, { port } from './data/localIp.ts'
 import {
   Novel,
   HomePage,
@@ -15,7 +15,7 @@ import {
   AiRoot,
   AiHomePage,
   ErrorPage
-} from './routers.js'
+} from './routers.ts'
 
 function parse_token({ url, username, password }) {
   return new Promise((reslove, reject) => {
@@ -37,6 +37,7 @@ function check_token() {
 async function from_action({ data, router }) {
   const user = data.username
   const password = data.password
+  console.log(router)
   try {
     const response = parse_token({
       url: `user/${router}`,
